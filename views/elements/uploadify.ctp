@@ -1,16 +1,16 @@
 <?php 
 if (in_array("uploadify_css", $include_scripts))
-    $this->Html->css("/uploadify/css/uploadify.css", null, array("inline"=>false));
+    $this->Html->css("/cuploadify/css/uploadify.css", null, array("inline"=>false));
 ?>
 
 <?php
 if (in_array("swfobject", $include_scripts))
-    echo $this->Html->script("/uploadify/js/swfobject.js");
+    echo $this->Html->script("/cuploadify/js/swfobject.js");
 ?>
 
 <?php 
 if (in_array("uploadify", $include_scripts))
-    echo $this->Html->script("/uploadify/js/jquery.uploadify.min.js");
+    echo $this->Html->script("/cuploadify/js/jquery.uploadify.min.js");
 ?>
 
 <?php
@@ -20,10 +20,10 @@ if (in_array("jquery", $include_scripts))
 
 <?php
 if (!isset($options["uploader"]))
-    $options["uploader"] = $this->Html->url("/uploadify/files/uploadify.swf");
+    $options["uploader"] = $this->Html->url("/cuploadify/files/uploadify.swf");
 
 if (!isset($options["cancelImg"]))
-    $options["cancelImg"] = $this->Html->url("/uploadify/img/cancel.png");
+    $options["cancelImg"] = $this->Html->url("/cuploadify/img/cancel.png");
 ?>
 
 <script type="text/javascript">
