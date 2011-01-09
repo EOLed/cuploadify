@@ -39,10 +39,8 @@ class CuploadifyComponent extends Object {
 
     /** Uploads data specified by the uploadify DOM element. */
     function upload() {
-        error_log("uploading");
         if (!empty($_FILES)) { $tempFile = $_FILES['Filedata']['tmp_name'];
             $targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
-            error_log("target path: $targetPath");
             $targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
             
             // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
