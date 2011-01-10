@@ -37,12 +37,41 @@ class CuploadifyComponent extends Object {
         }
     }
 
-    /** Uploads data specified by the uploadify DOM element. */
-    function upload() {
-        if (!empty($_FILES)) { $tempFile = $_FILES['Filedata']['tmp_name'];
-            $targetPath = $_SERVER['DOCUMENT_ROOT'] . $_REQUEST['folder'] . '/';
-            $targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
+    /**
+     * Uploads data specified by the uploadify DOM element.
+     *
+     * @param array $options Associative array of options.
+     */
+    function upload($options = array()) {
+        CakeLog::write("debug", "root: $options[root]");
+        if (!empty($_FILES)) { 
+            $doc_root = env('DOCUMENT_ROOT');
+            $temp_file = $_FILES['Filedata']['tmp_name'];
             
+            if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
+                $root = $options["root"];
+
+                // remove trailing slash
+                $root_length = strlen($root);
+                if (strrpos($root, "/") === $root_length - 1) {
+                    $root = substr($root, 0, $root_length - 1);
+                }
+
+                $doc_root .= "/" . $root;
+            }
+
+            $folder = $_REQUEST["folder"];
+
+            $target_path =  $doc_root . $folder . '/';
+
+            if (!file_exists($target_path)) {
+               mkdir($target_path, 0777, true); 
+            }
+            $target_file =  str_replace('//','/',$target_path) . $_FILES['Filedata']['name'];
+
+            CakeLog::write("debug", "temp_file: $temp_file, docRoot: $doc_root, " .
+                    "folder: $folder, target_file: $target_file");
+
             // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
             // $fileTypes  = str_replace(';','|',$fileTypes);
             // $typesArray = split('\|',$fileTypes);
@@ -50,13 +79,13 @@ class CuploadifyComponent extends Object {
             
             // if (in_array($fileParts['extension'],$typesArray)) {
                 // Uncomment the following line if you want to make the directory if it doesn't exist
-                // mkdir(str_replace('//','/',$targetPath), 0755, true);
+                // mkdir(str_replace('//','/',$target_path), 0755, true);
                 
-                move_uploaded_file($tempFile,$targetFile);
-                echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
+                move_uploaded_file($temp_file,$target_file);
+                //echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$target_file);
             // } else {
-            // 	echo 'Invalid file type.';
+            //  echo 'Invalid file type.';
             // }
         }
-    }
+   }
 }
