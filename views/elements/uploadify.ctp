@@ -26,6 +26,9 @@ if (!isset($options["uploader"]))
 if (!isset($options["cancelImg"]))
     $options["cancelImg"] = $this->Html->url("/cuploadify/img/cancel.png");
 
+if (isset($options["fileDataName"]))
+    $options["scriptData"]["fileDataName"] = $options["fileDataName"];
+
 if (isset($session_id))
     $options["scriptData"]["session_id"] = $session_id;
 ?>

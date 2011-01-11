@@ -20,7 +20,7 @@ class CuploadifyComponent extends Object {
     var $controller;
 
     /**
-     * Switches the session to the session_id sepcified from request.
+     * Switches the session to the session_id specified from request.
      *
      * @param object $controller Instantiating controller
      * @param array $settings Configuration settings
@@ -28,7 +28,7 @@ class CuploadifyComponent extends Object {
      */
     function initialize(&$controller, $settings=array()) {
         $this->controller = $controller;
-        CakeLog::write("debug", "intializing cuploadify component..."); 
+        CakeLog::write("debug", "initializing cuploadify component..."); 
         if (isset($_REQUEST["session_id"])) {
             CakeLog::write("debug", "session found.."); 
             $session_id = $_REQUEST["session_id"];
@@ -43,31 +43,27 @@ class CuploadifyComponent extends Object {
      * @param array $options Associative array of options.
      */
     function upload($options = array()) {
-        CakeLog::write("debug", "root: $options[root]");
         if (!empty($_FILES)) { 
-            $doc_root = env('DOCUMENT_ROOT');
-            $temp_file = $_FILES['Filedata']['tmp_name'];
+            $folder = $_REQUEST["folder"];
+            $file_data = isset($_REQUEST["fileDataName"]) ? $_REQUEST["fileDataName"] : "Filedata";
+            
+            $doc_root = $this->remove_trailing_slash(env('DOCUMENT_ROOT'));
+            $temp_file = $_FILES[$file_data]['tmp_name'];
             
             if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
-                $root = $options["root"];
-
-                // remove trailing slash
-                $root_length = strlen($root);
-                if (strrpos($root, "/") === $root_length - 1) {
-                    $root = substr($root, 0, $root_length - 1);
-                }
-
+                $root = $this->remove_trailing_slash($options["root"]);
                 $doc_root .= "/" . $root;
             }
 
-            $folder = $_REQUEST["folder"];
 
             $target_path =  $doc_root . $folder . '/';
 
             if (!file_exists($target_path)) {
-               mkdir($target_path, 0777, true); 
+                CakeLog::write("debug", "Creating directory: $target_path");
+                mkdir($target_path, 0777, true); 
             }
-            $target_file =  str_replace('//','/',$target_path) . $_FILES['Filedata']['name'];
+
+            $target_file =  str_replace('//','/',$target_path) . $_FILES[$file_data]['name'];
 
             CakeLog::write("debug", "temp_file: $temp_file, docRoot: $doc_root, " .
                     "folder: $folder, target_file: $target_file");
@@ -75,7 +71,7 @@ class CuploadifyComponent extends Object {
             // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
             // $fileTypes  = str_replace(';','|',$fileTypes);
             // $typesArray = split('\|',$fileTypes);
-            // $fileParts  = pathinfo($_FILES['Filedata']['name']);
+            // $fileParts  = pathinfo($_FILES[$file_data]['name']);
             
             // if (in_array($fileParts['extension'],$typesArray)) {
                 // Uncomment the following line if you want to make the directory if it doesn't exist
@@ -87,5 +83,18 @@ class CuploadifyComponent extends Object {
             //  echo 'Invalid file type.';
             // }
         }
-   }
+    }
+
+    /**
+     * Removes the trailing slash from the string specified.
+     * @param $string the string to remove the trailing slash from.
+     */
+    function remove_trailing_slash($string) {
+        $string_length = strlen($string);
+        if (strrpos($string, "/") === $string_length - 1) {
+            $string = substr($string, 0, $string_length - 1);
+        }
+
+        return $string;
+    }
 }
