@@ -60,7 +60,9 @@ class CuploadifyComponent extends Object {
 
             if (!file_exists($target_path)) {
                 CakeLog::write("debug", "Creating directory: $target_path");
+                $old = umask(0);
                 mkdir($target_path, 0777, true); 
+                umask($old);
             }
 
             $target_file =  str_replace('//','/',$target_path) . $_FILES[$file_data]['name'];

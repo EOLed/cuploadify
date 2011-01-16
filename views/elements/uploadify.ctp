@@ -47,6 +47,8 @@ $(document).ready(function() {
                 echo $val ? "true" : "false";
             } else if (is_numeric($val)) {
                 echo $val;
+            } else if (strpos($key, "on") === 0) {
+                echo $val;
             } else {
                 echo "\"$val\"";
             }
