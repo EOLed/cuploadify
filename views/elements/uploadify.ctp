@@ -9,6 +9,8 @@
 ?>
 <?php
 if (isset($include_scripts)) {
+    if (in_array("jquery", $include_scripts))
+        echo $this->Html->script("/cuploadify/js/jquery.js");
     if (in_array("uploadify_css", $include_scripts))
         $this->Html->css("/cuploadify/css/uploadify.css", null, array("inline"=>false));
 
@@ -17,9 +19,6 @@ if (isset($include_scripts)) {
 
     if (in_array("uploadify", $include_scripts))
         echo $this->Html->script("/cuploadify/js/jquery.uploadify.min.js");
-
-    if (in_array("jquery", $include_scripts))
-        echo $this->Html->script("jquery/jquery");
 }
 
 if (!isset($options["uploader"]))
