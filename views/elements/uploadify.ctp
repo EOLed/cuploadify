@@ -8,16 +8,18 @@
  */
 ?>
 <?php
-function get_script($include_scripts, $key, $default_script) {
-    $script = null;
+if (!function_exists("get_script")) {
+    function get_script($include_scripts, $key, $default_script) {
+        $script = null;
 
-    if (in_array($key, $include_scripts)) {
-        $script = $default_script;
-    } else if (array_key_exists($key, $include_scripts)) {
-        $script = $include_scripts[$key];
+        if (in_array($key, $include_scripts)) {
+            $script = $default_script;
+        } else if (array_key_exists($key, $include_scripts)) {
+            $script = $include_scripts[$key];
+        }
+
+        return $script;
     }
-
-    return $script;
 }
 
 if (isset($include_scripts)) {
