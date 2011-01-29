@@ -8,17 +8,33 @@
  */
 ?>
 <?php
+function get_script($include_scripts, $key, $default_script) {
+    $script = null;
+
+    if (in_array($key, $include_scripts)) {
+        $script = $default_script;
+    } else if (array_key_exists($key, $include_scripts)) {
+        $script = $include_scripts[$key];
+    }
+
+    return $script;
+}
+
 if (isset($include_scripts)) {
-    if (in_array("jquery", $include_scripts))
-        echo $this->Html->script("/cuploadify/js/jquery.js");
-    if (in_array("uploadify_css", $include_scripts))
-        $this->Html->css("/cuploadify/css/uploadify.css", null, array("inline"=>false));
+    $script = null;
+    if (($script = get_script($include_scripts, "jquery", "/cuploadify/js/jquery.js")) != null) 
+        echo $this->Html->script($script);
 
-    if (in_array("swfobject", $include_scripts))
-        echo $this->Html->script("/cuploadify/js/swfobject.js");
+    if (($script = get_script($include_scripts, "uploadify_css", "/cuploadify/css/uploadify.css")) 
+            != null)
+        $this->Html->css($script, null, array("inline"=>false));
 
-    if (in_array("uploadify", $include_scripts))
-        echo $this->Html->script("/cuploadify/js/jquery.uploadify.min.js");
+    if (($script = get_script($include_scripts, "swfobject", "/cuploadify/js/swfobject.js")) != null)
+        echo $this->Html->script($script);
+
+    if (($script = get_script($include_scripts, "uploadify", "/cuploadify/js/jquery.uploadify.min.js"))
+            != null)
+        echo $this->Html->script($script);
 }
 
 if (!isset($options["uploader"]))
