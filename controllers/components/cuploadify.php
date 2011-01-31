@@ -44,19 +44,10 @@ class CuploadifyComponent extends Object {
      */
     function upload($options = array()) {
         if (!empty($_FILES)) { 
-            $folder = $_REQUEST["folder"];
             $file_data = isset($_REQUEST["fileDataName"]) ? $_REQUEST["fileDataName"] : "Filedata";
-            
-            $doc_root = $this->remove_trailing_slash(env('DOCUMENT_ROOT'));
             $temp_file = $_FILES[$file_data]['tmp_name'];
             
-            if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
-                $root = $this->remove_trailing_slash($options["root"]);
-                $doc_root .= "/" . $root;
-            }
-
-
-            $target_path =  $doc_root . $folder . '/';
+            $target_path = $this->get_target_folder($options);
 
             if (!file_exists($target_path)) {
                 CakeLog::write("debug", "Creating directory: $target_path");
@@ -66,9 +57,6 @@ class CuploadifyComponent extends Object {
             }
 
             $target_file =  str_replace('//','/',$target_path) . $_FILES[$file_data]['name'];
-
-            CakeLog::write("debug", "temp_file: $temp_file, docRoot: $doc_root, " .
-                    "folder: $folder, target_file: $target_file");
 
             // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
             // $fileTypes  = str_replace(';','|',$fileTypes);
@@ -85,6 +73,26 @@ class CuploadifyComponent extends Object {
             //  echo 'Invalid file type.';
             // }
         }
+    }
+
+    function get_target_folder($options=array()) {
+        $doc_root = $this->get_doc_root($options);
+        return $doc_root . $_REQUEST["folder"] . '/';
+    }
+
+    function get_doc_root($options=array()) {
+        $doc_root = $this->remove_trailing_slash(env('DOCUMENT_ROOT'));
+        if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
+            $root = $this->remove_trailing_slash($options["root"]);
+            $doc_root .= "/" . $root;
+        }
+
+        return $doc_root;
+    }
+
+    function get_filename() {
+        $file_data = isset($_REQUEST["fileDataName"]) ? $_REQUEST["fileDataName"] : "Filedata";
+        return $_FILES[$file_data]['name'];
     }
 
     /**
