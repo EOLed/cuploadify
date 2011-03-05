@@ -84,7 +84,7 @@ class CuploadifyComponent extends Object {
         $doc_root = $this->remove_trailing_slash(env('DOCUMENT_ROOT'));
         if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
             $root = $this->remove_trailing_slash($options["root"]);
-            $doc_root .= "/" . $root;
+            $doc_root .=  $root;
         }
 
         return $doc_root;
