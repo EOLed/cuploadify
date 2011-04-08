@@ -1,10 +1,67 @@
-Cuploadify is an Uploadify plugin for CakePHP.
+h1. Cuploadify Plugin
 
-v1.0 is currently based on v2.1.4 of Uploadify (subject to change until tagged).
+Cuploadify is the CakePHP plugin for Uploadify.
 
-For more information regarding the development of this plugin, visit: http://www.am05.com/tag/cuploadify.
+h2. Background
 
-Dowload the plugin and check the url:
-http://localhost/cuploadify/tests/upload for an example
-Make sure that your app/webroot/files folder is writable
+In my attempt to decouple all of my CakePHP projects into separate, reusable plugins, I’ve created a CakePHP plugin for Uploadify. For those of you who aren’t familiar with Uploadify, they describe themselves as "a powerful and highly-customizable file upload script."
 
+h2. Requirements
+
+* PHP 5.0
+* CakePHP 1.3
+* Uploadify 2.1.4 (included)
+* JQuery 1.4.4 (included but can use your existing copy)
+
+h2. Installation
+
+_[Manual]_
+
+# Download this: http://github.com/achan/cuploadify/zipball/master
+# Unzip that download.
+# Copy the resulting folder to app/plugins
+# Rename the folder you just copied to @cuploadify@
+
+_[GIT Submodule]_
+
+In your app directory type:
+<pre><code>git submodule add git://github.com/achan/cuploadify.git plugins/cuploadify
+git submodule init
+git submodule update
+</code></pre>
+
+_[GIT Clone]_
+
+In your plugin directory type
+<pre><code>git clone git://github.com/achan/cuploadify.git cuploadify</code></pre>
+
+h2. Usage
+
+Usage examples and further documentation can be found at http://www.am05.com/tag/cuploadify. You can also check out http://localhost/cuploadify/tests/upload to verify that your plugin has been successfully installed.
+
+
+h2. Todo
+
+* Update to Uploadify 3.0.0
+
+h2. License
+
+Copyright (c) 2011 Amos Chan (am05.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
