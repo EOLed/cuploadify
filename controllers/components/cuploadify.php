@@ -56,7 +56,9 @@ class CuploadifyComponent extends Object {
                 umask($old);
             }
 
-            $target_file =  str_replace('//','/',$target_path) . $_FILES[$file_data]['name'];
+            $filename_prefix = isset($options["filename_prefix"]) ? $options["filename_prefix"] : "";
+
+            $target_file =  str_replace('//','/',$target_path) . "/$filename_prefix" . $_FILES[$file_data]['name'];
 
             // $fileTypes  = str_replace('*.','',$_REQUEST['fileext']);
             // $fileTypes  = str_replace(';','|',$fileTypes);
@@ -67,7 +69,9 @@ class CuploadifyComponent extends Object {
                 // Uncomment the following line if you want to make the directory if it doesn't exist
                 // mkdir(str_replace('//','/',$target_path), 0755, true);
                 
-                move_uploaded_file($temp_file,$target_file);
+                $success = move_uploaded_file($temp_file,$target_file);
+
+                return $success ? $target_file : $success;
                 //echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$target_file);
             // } else {
             //  echo 'Invalid file type.';
@@ -76,12 +80,11 @@ class CuploadifyComponent extends Object {
     }
 
     function get_target_folder($options=array()) {
-        $doc_root = $this->get_doc_root($options);
-        return $doc_root . $_REQUEST["folder"] . '/';
+        return $this->get_doc_root($options) . $_REQUEST["folder"];
     }
 
     function get_doc_root($options=array()) {
-        $doc_root = $this->remove_trailing_slash(env('DOCUMENT_ROOT'));
+        $doc_root = !isset($options["doc_root_relative"]) || $options["doc_root_relative"] ? $this->remove_trailing_slash(env('DOCUMENT_ROOT')) : "";
         if (isset($options["root"]) && strlen(trim($options["root"])) > 0) {
             $root = $this->remove_trailing_slash($options["root"]);
             $doc_root .=  $root;
