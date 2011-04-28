@@ -29,7 +29,7 @@ if (isset($include_scripts)) {
 
     if (($script = get_script($include_scripts, "uploadify_css", "/cuploadify/css/uploadify.css")) 
             != null)
-        $this->Html->css($script, null, array("inline"=>false));
+        echo $this->Html->css($script, null, array("inline"=>false));
 
     if (($script = get_script($include_scripts, "swfobject", "/cuploadify/js/swfobject.js")) != null)
         echo $this->Html->script($script);
