@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Cuploadify Component class.
  * This script will take care of uploading the files specified by the uploadify DOM element.
@@ -10,7 +11,7 @@
  * @since Cuploadify v 1.0
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-class CuploadifyComponent extends Object {
+class CuploadifyComponent extends Component {
     /**
      * The instantiating controller.
      *
