@@ -10,7 +10,7 @@
  * @since Cuploadify v 1.0
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-class CuploadifyComponent extends Object {
+class CuploadifyComponent extends Component {
     /**
      * The instantiating controller.
      *
