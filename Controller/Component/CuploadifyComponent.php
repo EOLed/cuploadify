@@ -1,15 +1,4 @@
-<?php
-/**
- * The Cuploadify Component class.
- * This script will take care of uploading the files specified by the uploadify DOM element.
- * If a session_id was specified in the uplaodified element, this component will also be responsible
- * for switching over to said session.
- *
- * @copyright Copyright 2011, AM05, inc. (http://am05.com)
- * @author Amos Chan <amos.chan@chapps.org>
- * @since Cuploadify v 1.0
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- */
+<?php /** * The Cuploadify Component class.  * This script will take care of uploading the files specified by the uploadify DOM element.  * If a session_id was specified in the uplaodified element, this component will also be responsible * for switching over to said session.  * * @copyright Copyright 2011, AM05, inc. (http://am05.com) * @author Amos Chan <amos.chan@chapps.org> * @since Cuploadify v 1.0 * @license http://www.opensource.org/licenses/mit-license.php The MIT License */
 class CuploadifyComponent extends Component {
     /**
      * The instantiating controller.
@@ -26,7 +15,7 @@ class CuploadifyComponent extends Component {
      * @param array $settings Configuration settings
      * @return void
      */
-    function initialize(&$controller, $settings=array()) {
+    function initialize(Controller $controller, $settings=array()) {
         $this->controller = $controller;
         CakeLog::write("debug", "initializing cuploadify component..."); 
         if (isset($_REQUEST["session_id"])) {
